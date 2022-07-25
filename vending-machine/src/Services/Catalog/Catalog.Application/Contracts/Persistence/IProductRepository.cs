@@ -22,12 +22,10 @@ namespace Vending.Application.Contracts.Persistence
         Task<bool> ExistByName(string name);
 
         /// <summary>
-        /// Get the paginated list of all the products
+        /// Get the list of all available products of a vending machine
         /// </summary>
-        /// <param name="startIndex">Number of page to retrieve</param>
-        /// <param name="count">Size of page</param>
-        /// <param name="text">Text to filter</param>
-        /// <returns></returns>
-        Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string? text);
+        /// <param name="vendingMachineId">Vending machine identifier</param>
+        /// <returns>The product catalog of the vending machine</returns>
+        Task<List<Product>> GetAllProductsByVendingMachine(int vendingMachineId);
     }
 }
