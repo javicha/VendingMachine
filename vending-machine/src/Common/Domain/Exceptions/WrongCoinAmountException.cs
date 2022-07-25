@@ -1,4 +1,4 @@
-﻿namespace Wallet.Domain.Exceptions
+﻿namespace Domain.Exceptions
 {
     [Serializable]
     public class WrongCoinAmountException : Exception

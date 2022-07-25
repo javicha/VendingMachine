@@ -1,7 +1,7 @@
-﻿using Catalog.Domain.Common;
+﻿using Vending.Domain.Common;
 using System.Linq.Expressions;
 
-namespace Catalog.Application.Contracts.Persistence
+namespace Vending.Application.Contracts.Persistence
 {
     /// <summary>
     /// Generic repository interface for entities of type EntityBase

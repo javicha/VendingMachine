@@ -1,6 +1,6 @@
-﻿using Catalog.Domain.Entities;
+﻿using Vending.Domain.Entities;
 
-namespace Catalog.Application.Contracts.Persistence
+namespace Vending.Application.Contracts.Persistence
 {
     /// <summary>
     /// Specific contracts for the Product entity

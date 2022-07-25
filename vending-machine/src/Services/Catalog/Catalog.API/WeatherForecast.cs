@@ -1,4 +1,4 @@
-namespace Catalog.API
+namespace Vending.API
 {
     public class WeatherForecast
     {

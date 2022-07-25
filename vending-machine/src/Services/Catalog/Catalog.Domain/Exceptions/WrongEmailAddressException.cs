@@ -1,4 +1,4 @@
-﻿namespace Catalog.Domain.Exceptions
+﻿namespace Vending.Domain.Exceptions
 {
     [Serializable]
     public class WrongEmailAddressException : Exception

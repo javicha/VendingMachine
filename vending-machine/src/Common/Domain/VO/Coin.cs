@@ -1,7 +1,6 @@
-﻿using Domain.VO;
-using Wallet.Domain.Exceptions;
+﻿using Domain.Exceptions;
 
-namespace Wallet.Domain.VO
+namespace Domain.VO
 {
     /// <summary>
     /// ValueObject that encapsulates a coin. Responsible for ensuring the integrity of your data.
@@ -26,11 +25,11 @@ namespace Wallet.Domain.VO
         public Coin(string name, string currency, decimal amount)
         {
             //Ensuring integrity of data
-            if(!ValidCurrencies.Contains(currency))
+            if (!ValidCurrencies.Contains(currency))
             {
                 throw new WrongCurrencyException($"The currency {currency} is not supported");
             }
-            if(!ValidCoinAmounts.Contains(amount))
+            if (!ValidCoinAmounts.Contains(amount))
             {
                 throw new WrongCoinAmountException($"The coin amount {amount} is not supported");
             }

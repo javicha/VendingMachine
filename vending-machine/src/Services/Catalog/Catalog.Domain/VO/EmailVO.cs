@@ -1,8 +1,8 @@
-﻿using Catalog.Domain.Exceptions;
+﻿using Vending.Domain.Exceptions;
 using Domain.VO;
 using System.Text.RegularExpressions;
 
-namespace Catalog.Domain.VO
+namespace Vending.Domain.VO
 {
     /// <summary>
     /// ValueObject that encapsulates an email message. Responsible for ensuring the integrity of your data.

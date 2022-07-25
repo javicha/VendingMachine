@@ -1,6 +1,6 @@
-﻿using Catalog.Domain.VO;
+﻿using Vending.Domain.VO;
 
-namespace Catalog.Application.Contracts.Infrastructure
+namespace Vending.Application.Contracts.Infrastructure
 {
     /// <summary>
     /// Contracts related to mailing

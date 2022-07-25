@@ -9,31 +9,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DEE4FC2E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{36FE1A33-3B61-4E59-B6D6-2B710C020DFB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{48A1F301-6888-4D07-99EA-EF6827C4A96B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vending", "Vending", "{48A1F301-6888-4D07-99EA-EF6827C4A96B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wallet", "Wallet", "{625CACCB-416A-48B9-89EF-B51D9D85B353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "src\Services\Catalog\Catalog.API\Catalog.API.csproj", "{8C8A7F49-1D56-4865-8F02-2E1EC1FC0B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vending.API", "src\Services\Catalog\Catalog.API\Vending.API.csproj", "{8C8A7F49-1D56-4865-8F02-2E1EC1FC0B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Domain", "src\Services\Catalog\Catalog.Domain\Catalog.Domain.csproj", "{7B35E627-9F55-4ADC-A22C-E1009BB3C9F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vending.Domain", "src\Services\Catalog\Catalog.Domain\Vending.Domain.csproj", "{7B35E627-9F55-4ADC-A22C-E1009BB3C9F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Application", "src\Services\Catalog\Catalog.Application\Catalog.Application.csproj", "{280E5AB8-E0F7-4D09-8A13-986B455CAE2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vending.Application", "src\Services\Catalog\Catalog.Application\Vending.Application.csproj", "{280E5AB8-E0F7-4D09-8A13-986B455CAE2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Infrastructure", "src\Services\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{EC7F2C17-2576-4E9B-9B13-6B16EDEABA7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vending.Infrastructure", "src\Services\Catalog\Catalog.Infrastructure\Vending.Infrastructure.csproj", "{EC7F2C17-2576-4E9B-9B13-6B16EDEABA7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Domain", "src\Services\Wallet\Wallet.Domain\Wallet.Domain.csproj", "{09B0D6B3-A612-4AB9-83B9-1F11FC079FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.Domain", "src\Services\Wallet\Wallet.Domain\Wallet.Domain.csproj", "{09B0D6B3-A612-4AB9-83B9-1F11FC079FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Infrastructure", "src\Services\Wallet\Wallet.Infrastructure\Wallet.Infrastructure.csproj", "{C67FF7AF-2FA6-47B5-B5BC-64E6F9CBDA35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.Infrastructure", "src\Services\Wallet\Wallet.Infrastructure\Wallet.Infrastructure.csproj", "{C67FF7AF-2FA6-47B5-B5BC-64E6F9CBDA35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Application", "src\Services\Wallet\Wallet.Application\Wallet.Application.csproj", "{C3F8DF4F-F4FD-47A0-AB34-5B5395AAC5C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.Application", "src\Services\Wallet\Wallet.Application\Wallet.Application.csproj", "{C3F8DF4F-F4FD-47A0-AB34-5B5395AAC5C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.API", "src\Services\Wallet\Wallet.API\Wallet.API.csproj", "{D3E942FD-F672-4E2A-BE0E-557D8146974F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.API", "src\Services\Wallet\Wallet.API\Wallet.API.csproj", "{D3E942FD-F672-4E2A-BE0E-557D8146974F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{03465364-C6DF-493C-A138-A8CB08C8AE23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Common\Domain\Domain.csproj", "{3CDDB14E-2725-4EBC-A257-25877F7B8C23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Common\Domain\Domain.csproj", "{3CDDB14E-2725-4EBC-A257-25877F7B8C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Common\Application\Application\Application.csproj", "{DE277F54-5AA2-4F56-8E94-2271B1F1EFB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Common\Application\Application\Application.csproj", "{DE277F54-5AA2-4F56-8E94-2271B1F1EFB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

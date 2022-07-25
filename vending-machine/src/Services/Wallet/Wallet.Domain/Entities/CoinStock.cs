@@ -1,5 +1,5 @@
 ﻿using Wallet.Domain.Common;
-using Wallet.Domain.VO;
+using Domain.VO;
 
 namespace Wallet.Domain.Entities
 {

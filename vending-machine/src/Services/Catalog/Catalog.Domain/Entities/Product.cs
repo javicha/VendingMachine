@@ -1,6 +1,6 @@
-﻿using Catalog.Domain.Common;
+﻿using Vending.Domain.Common;
 
-namespace Catalog.Domain.Entities
+namespace Vending.Domain.Entities
 {
     /// <summary>
     /// Entity that models a vending machine product

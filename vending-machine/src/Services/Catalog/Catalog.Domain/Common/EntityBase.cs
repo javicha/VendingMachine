@@ -1,4 +1,4 @@
-﻿namespace Catalog.Domain.Common
+﻿namespace Vending.Domain.Common
 {
     /// <summary>
     /// Class with the fields common to all domain entities (for example unique identifier or audit data)
