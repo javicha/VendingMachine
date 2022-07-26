@@ -30,13 +30,13 @@ namespace Vending.Domain.Entities
         public IReadOnlyCollection<Product> Products => _products.ToList().AsReadOnly();
 
 
-        public VendingMachine(string serialNumber, string name, string userName)
+        public VendingMachine(string serialNumber, string name, string userCreated)
         {
             _products = new HashSet<Product>();
             CoinBasket = new CoinBasket();
             SerialNumber = serialNumber ?? throw new ArgumentNullException(nameof(serialNumber));
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            this.SetInsertAuditParams(userName);
+            this.SetInsertAuditParams(userCreated);
         }
 
 

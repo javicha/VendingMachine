@@ -21,7 +21,7 @@ namespace Vending.Infrastructure.Persistence
         private static VendingMachine GetVendingMachine()
         {
             string userCreated = "javier.val";
-            var vendingMachine = new VendingMachine("VEN-MACH-3242352543534", "Delicious Drinks", userCreated);
+            var vendingMachine = new VendingMachine("1234", "Delicious Drinks", userCreated);
             foreach(var product in GetProducts())
             {
                 vendingMachine.AddNewProduct(userCreated, product.Name, product.Price, product.Portions);

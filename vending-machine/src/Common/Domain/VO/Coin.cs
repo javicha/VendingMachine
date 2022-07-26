@@ -1,10 +1,12 @@
 ﻿using Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.VO
 {
     /// <summary>
     /// ValueObject that encapsulates a coin. Responsible for ensuring the integrity of your data.
     /// </summary>
+    [Keyless]
     public class Coin : ValueObject
     {
         /// <summary>

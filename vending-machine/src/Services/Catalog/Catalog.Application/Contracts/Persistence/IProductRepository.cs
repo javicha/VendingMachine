@@ -24,7 +24,7 @@ namespace Vending.Application.Contracts.Persistence
         /// <summary>
         /// Get the list of all available products of a vending machine
         /// </summary>
-        /// <param name="vendingMachineId">Vending machine identifier</param>
+        /// <param name="vendingMachineId">Vending machine unique identifier</param>
         /// <returns>The product catalog of the vending machine</returns>
         Task<List<Product>> GetAllProductsByVendingMachine(int vendingMachineId);
     }

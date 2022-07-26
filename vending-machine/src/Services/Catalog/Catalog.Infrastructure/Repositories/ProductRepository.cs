@@ -30,7 +30,7 @@ namespace Vending.Infrastructure.Repositories
         /// <returns>The product catalog of the vending machine</returns>
         public Task<List<Product>> GetAllProductsByVendingMachine(int vendingMachineId)
         {
-            return _vendingContext.Products.Where(p => p.DateDeleted == null && p.Portions > 0).ToListAsync();
+            return _vendingContext.Products.Where(p => p.DateDeleted == null && p.Portions > 0 && p.VendingMachineId == vendingMachineId).ToListAsync();
         }
 
         /// <summary>

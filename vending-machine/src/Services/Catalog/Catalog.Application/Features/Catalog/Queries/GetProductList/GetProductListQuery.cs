@@ -14,9 +14,14 @@ namespace Vending.Application.Features.Catalog.Queries.GetProductList
         [Required]
         public int VendigMachineId { get; set; }
 
+
         public GetProductListQuery(int vendigMachineId)
         {
             VendigMachineId = vendigMachineId;
+        }
+
+        public GetProductListQuery()
+        {
         }
     }
 }

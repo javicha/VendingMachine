@@ -27,6 +27,12 @@ namespace Vending.Domain.Entities
         /// </summary>
         public int MinStock { get; private set; }
 
+        /// <summary>
+        /// Vending machine to which the products belong
+        /// </summary>
+        public VendingMachine VendingMachine { get; private set; }
+        public int VendingMachineId { get; set; }
+
 
         public Product(string name, decimal price, int portions, int minStock)
         {
