@@ -1,3 +1,4 @@
+using Application.Middleware;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Vending.API.Extensions;
@@ -33,7 +34,7 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
-//Register all the Application and Infrastructure layers services 
+//Register all the Application and Infrastructure layers services
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
@@ -46,6 +47,8 @@ app.PopulateDatabase<VendingContext>((context, services) =>
 });
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>(); //Global handling exceptions
+
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {
