@@ -84,9 +84,14 @@ namespace Vending.Domain.Entities
         /// <returns>All the coins inserted</returns>
         public List<Coin> ReturnCoins()
         {
-            var coins = _coins;
-            _coins.Clear();
-            return coins.ToList();
+            List<Coin> coinsToReturn = new List<Coin>();
+            _coins.ToList().ForEach(c =>
+            {
+                coinsToReturn.Add(c);
+                c.SetDeleteAuditParams("userTest");
+            });
+
+            return coinsToReturn;
         }
 
         #endregion

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 using Vending.Application.Features.Catalog.Commands.AcceptCoin;
+using Vending.Application.Features.Catalog.Commands.ReturnCoins;
 using Vending.Application.Features.Catalog.Queries.GetProductList;
 
 namespace Vending.API.Controllers
@@ -55,6 +56,25 @@ namespace Vending.API.Controllers
 
             var result = await _mediator.Send(command);
             return Ok(result.ToString("0.00"));
+        }
+
+
+        /// <summary>
+        /// Cancel the purchase and get back all the coins entered in the vending machine
+        /// </summary>
+        /// <param name="command">The vending machine serial number</param>
+        /// <returns>All the coins inserted so far</returns>
+        [HttpPost]
+        [Route("CancelPurchase")]
+        [ProducesResponseType(typeof(List<string>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<int>> ReturnCoins([FromBody] ReturnCoinsCommand command)
+        {
+            _logger.LogInformation($"VendingController - ReturnCoins - {JsonSerializer.Serialize(command)}");
+
+            var result = await _mediator.Send(command);
+            return Ok(result.Select(r => r.GetName()).ToList());
         }
     }
 }

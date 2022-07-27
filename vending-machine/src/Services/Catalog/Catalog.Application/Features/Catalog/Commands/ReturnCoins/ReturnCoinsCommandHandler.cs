@@ -5,18 +5,18 @@ using Microsoft.Extensions.Logging;
 using Vending.Application.Contracts.Persistence;
 using Vending.Domain.Entities;
 
-namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
+namespace Vending.Application.Features.Catalog.Commands.ReturnCoins
 {
     /// <summary>
-    /// CQRS pattern: AcceptCoinCommand command handler
+    /// CQRS pattern: ReturnCoinsCommand command handler
     /// </summary>
-    public class AcceptCoinCommandHandler : IRequestHandler<AcceptCoinCommand, decimal>
+    public class ReturnCoinsCommandHandler : IRequestHandler<ReturnCoinsCommand, List<CoinDTO>>
     {
         private readonly IVendingMachineRepository _vendingMachineRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<AcceptCoinCommandHandler> _logger;
+        private readonly ILogger<ReturnCoinsCommandHandler> _logger;
 
-        public AcceptCoinCommandHandler(IVendingMachineRepository vendingMachineRepository, IMapper mapper, ILogger<AcceptCoinCommandHandler> logger)
+        public ReturnCoinsCommandHandler(IVendingMachineRepository vendingMachineRepository, IMapper mapper, ILogger<ReturnCoinsCommandHandler> logger)
         {
             _vendingMachineRepository = vendingMachineRepository ?? throw new ArgumentNullException(nameof(vendingMachineRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -24,13 +24,13 @@ namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
         }
 
         /// <summary>
-        /// Insert a coin in the vending machine
+        /// Handler that returns the coins inserted in the machine
         /// </summary>
         /// <param name="request">Command parameters</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>The total amount of coins entered so far</returns>
+        /// <returns>List representing the coins inserted in the machine</returns>
         /// <exception cref="NotFoundException"></exception>
-        public async Task<decimal> Handle(AcceptCoinCommand request, CancellationToken cancellationToken)
+        public async Task<List<CoinDTO>> Handle(ReturnCoinsCommand request, CancellationToken cancellationToken)
         {
             var machineToUpdate = await _vendingMachineRepository.GetVendingMachineWithCoins(request.SerialNumber);
             if (machineToUpdate == null)
@@ -38,12 +38,11 @@ namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
                 throw new NotFoundException(nameof(VendingMachine), request.SerialNumber);
             }
 
-            var totalInserted = machineToUpdate.InsertCoin(request.Amount);
-
+            var coins = machineToUpdate.ReturnCoins().OrderBy(c => c.Amount).ToList();
             await _vendingMachineRepository.UpdateAsync(machineToUpdate, "userTest");
 
-            _logger.LogInformation($"Coin {request.Amount.ToString()}€ is successfully inserted.");
-            return totalInserted;
+            _logger.LogInformation($"Get {coins.Count} coins to return. A total of {coins.Sum(c => c.Amount)}€");
+            return coins != null ? _mapper.Map<List<CoinDTO>>(coins) : new List<CoinDTO>();
         }
     }
 }

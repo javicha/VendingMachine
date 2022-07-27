@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Catalog\Commands\ReturnCoins\" />
     <Folder Include="Features\Wallet\" />
   </ItemGroup>
 
