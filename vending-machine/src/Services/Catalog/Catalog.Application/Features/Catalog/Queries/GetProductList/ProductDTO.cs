@@ -6,13 +6,18 @@
     public class ProductDTO
     {
         /// <summary>
+        /// Product identifier
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Product name
         /// </summary>
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Sale price
         /// </summary>
-        public decimal Price { get; private set; }
+        public decimal Price { get; set; }
     }
 }

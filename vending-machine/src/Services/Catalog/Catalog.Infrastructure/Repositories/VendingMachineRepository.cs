@@ -48,5 +48,16 @@ namespace Vending.Infrastructure.Repositories
         }
 
 
+        /// <summary>
+        /// Get the vending machine information and all related information
+        /// </summary>
+        /// <param name="serialNumber">Vending machine serial number</param>
+        /// <returns>The product catalog of the vending machine and coins inserted</returns>
+        public Task<VendingMachine> GetVendingMachineWithProductsAndCoins(string serialNumber)
+        {
+            string serial = serialNumber.Trim().ToUpper();
+            return _vendingContext.VendingMachines.Where(v => v.SerialNumber == serial).Include(v => v.Products.Where(p => p.DateDeleted == null && p.Portions > 0))
+                .Include(v => v.Coins.Where(c => c.DateDeleted == null)).FirstOrDefaultAsync();
+        }
     }
 }

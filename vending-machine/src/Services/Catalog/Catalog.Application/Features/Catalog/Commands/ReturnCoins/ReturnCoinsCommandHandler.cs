@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using AutoMapper;
+using Domain.DTO;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Vending.Application.Contracts.Persistence;

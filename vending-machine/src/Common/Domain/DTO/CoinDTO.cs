@@ -1,10 +1,10 @@
-﻿namespace Vending.Application.Features.Catalog.Commands.ReturnCoins
+﻿namespace Domain.DTO
 {
     /// <summary>
     /// DTO object with the Coin information customized for the presentation layer
     /// </summary>
     public class CoinDTO
-    {   
+    {
         /// <summary>
         /// Monetary quantity
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.DTO;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace Vending.Application.Features.Catalog.Commands.ReturnCoins

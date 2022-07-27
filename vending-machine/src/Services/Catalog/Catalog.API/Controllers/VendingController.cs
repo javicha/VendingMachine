@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.Json;
 using Vending.Application.Features.Catalog.Commands.AcceptCoin;
 using Vending.Application.Features.Catalog.Commands.ReturnCoins;
+using Vending.Application.Features.Catalog.Commands.SellProduct;
 using Vending.Application.Features.Catalog.Queries.GetProductList;
 
 namespace Vending.API.Controllers
@@ -75,6 +76,28 @@ namespace Vending.API.Controllers
 
             var result = await _mediator.Send(command);
             return Ok(result.Select(r => r.GetName()).ToList());
+        }
+
+
+        /// <summary>
+        /// Endpoint that allows the customer to buy a product
+        /// </summary>
+        /// <param name="command">The vending machine serial number and product identifier</param>
+        /// <returns>If the product price is less than the deposited amount, the Vending machine shows a “Thank you” message 
+        /// and return the difference between the inserted amount and the price using the smallest number of coins possible.
+        /// If the product price is higher than the amount inserted, Vending machine shows a message “Insufficient amount”
+        /// </returns>
+        [HttpPost]
+        [Route("SellProduct")]
+        [ProducesResponseType(typeof(Tuple<string, List<string>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<int>> SellProduct([FromBody] SellProductCommand command)
+        {
+            _logger.LogInformation($"VendingController - SellProduct - {JsonSerializer.Serialize(command)}");
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }
