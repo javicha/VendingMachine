@@ -10,9 +10,9 @@ namespace Vending.Application.Features.Catalog.Queries.GetProductList
     {
         public GetProductListQueryValidator()
         {
-            RuleFor(p => p.VendigMachineId)
+            RuleFor(p => p.SerialNumber)
                 .NotNull()
-                .GreaterThan(0).WithMessage("{VendigMachineId} must be a valid identifier.");
+                .NotEmpty().WithMessage("{SerialNumber} must be a valid identifier.");
         }
     }
 }

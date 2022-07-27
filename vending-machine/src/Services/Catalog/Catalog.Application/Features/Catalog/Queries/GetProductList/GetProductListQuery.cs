@@ -9,15 +9,15 @@ namespace Vending.Application.Features.Catalog.Queries.GetProductList
     public class GetProductListQuery : IRequest<List<ProductDTO>>
     {
         /// <summary>
-        /// Vending machine identifier
+        /// Vending machine unique serial number
         /// </summary>
         [Required]
-        public int VendigMachineId { get; set; }
+        public string SerialNumber { get; set; }
 
 
-        public GetProductListQuery(int vendigMachineId)
+        public GetProductListQuery(string serialNumber)
         {
-            VendigMachineId = vendigMachineId;
+            SerialNumber = serialNumber;
         }
 
         public GetProductListQuery()

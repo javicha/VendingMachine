@@ -1,4 +1,5 @@
-﻿using Vending.Domain.Common;
+﻿using Domain.VO;
+using Vending.Domain.Common;
 using Vending.Domain.ExtensionMethods;
 
 namespace Vending.Domain.Entities
@@ -19,21 +20,22 @@ namespace Vending.Domain.Entities
         public string Name { get; private set; }
 
         /// <summary>
-        /// Deposited amount to perform a purchase
-        /// </summary>
-        public CoinBasket CoinBasket { get; private set; }
-
-        /// <summary>
         /// Set of products available in the vending machine. This is the catalog of the vending machine
         /// </summary>
         private readonly HashSet<Product> _products;
         public IReadOnlyCollection<Product> Products => _products.ToList().AsReadOnly();
 
+        /// <summary>
+        /// Set of coins inserted in the vending machine. Represents the deposited amount to perform a purchase
+        /// </summary>
+        private readonly HashSet<Coin> _coins;
+        public IReadOnlyCollection<Coin> Coins => _coins.ToList().AsReadOnly();
+
 
         public VendingMachine(string serialNumber, string name, string userCreated)
         {
             _products = new HashSet<Product>();
-            CoinBasket = new CoinBasket();
+            _coins = new HashSet<Coin>();
             SerialNumber = serialNumber ?? throw new ArgumentNullException(nameof(serialNumber));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             this.SetInsertAuditParams(userCreated);
@@ -62,6 +64,29 @@ namespace Vending.Domain.Entities
         public void AddNewProduct(string userName, string name, decimal price, int portions, int minStock = 0)
         {
             _products.Add(new Product(name, price, portions, minStock).SetInsertAuditParams(userName));
+        }
+
+        /// <summary>
+        /// Insert a coin into the vending machine
+        /// </summary>
+        /// <param name="coin">A valid coin</param>
+        /// <returns>The total amount entered so far</returns>
+        public decimal InsertCoin(decimal amount)
+        {
+            var coin = new Coin(amount);
+            _coins.Add(coin);
+            return _coins.Sum(c => c.Amount);
+        }
+
+        /// <summary>
+        /// Take back the coins inserted in the vending machine
+        /// </summary>
+        /// <returns>All the coins inserted</returns>
+        public List<Coin> ReturnCoins()
+        {
+            var coins = _coins;
+            _coins.Clear();
+            return coins.ToList();
         }
 
         #endregion

@@ -24,7 +24,7 @@ namespace Domain.VO
         /// </summary>
         public decimal Amount { get; private set; }
 
-        public Coin(string name, string currency, decimal amount)
+        public Coin(decimal amount, string currency = "EUR")
         {
             //Ensuring integrity of data
             if (!ValidCurrencies.Contains(currency))
@@ -36,9 +36,9 @@ namespace Domain.VO
                 throw new WrongCoinAmountException($"The coin amount {amount} is not supported");
             }
 
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Currency = currency ?? throw new ArgumentNullException(nameof(currency));
             Amount = amount;
+            Name = GetCoinName(Amount);
+            Currency = currency ?? throw new ArgumentNullException(nameof(currency));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -53,5 +53,24 @@ namespace Domain.VO
         //For simplicity, we store the currency and allowed coin values in private variables
         private readonly List<string> ValidCurrencies = new List<string>() { "EUR" };
         private readonly List<decimal> ValidCoinAmounts = new List<decimal>() { 0.10m, 0.20m, 0.50m, 1m, 2m };
+
+        private string GetCoinName(decimal amount)
+        {
+            switch(amount)
+            {
+                case 0.10m:
+                    return "10 cents";
+                case 0.20m:
+                    return "20 cents";
+                case 0.50m:
+                    return "50 cents";
+                case 1m:
+                    return "1 euro";
+                case 2m:
+                    return "2 euros";
+                default:
+                    return "";
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace Vending.Infrastructure
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>)); //Per-request lifecycle
             services.AddScoped<IProductRepository, ProductRepository>(); //Per-request lifecycle
+            services.AddScoped<IVendingMachineRepository, VendingMachineRepository>(); //Per-request lifecycle
 
             return services;
         }

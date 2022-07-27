@@ -10,13 +10,13 @@ namespace Vending.Application.Features.Catalog.Queries.GetProductList
     /// </summary>
     public class GetProductListQueryHandler : IRequestHandler<GetProductListQuery, List<ProductDTO>>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IVendingMachineRepository _vendingMachineRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<GetProductListQueryHandler> _logger;
 
-        public GetProductListQueryHandler(IProductRepository productRepository, IMapper mapper, ILogger<GetProductListQueryHandler> logger)
+        public GetProductListQueryHandler(IVendingMachineRepository vendingMachineRepository, IMapper mapper, ILogger<GetProductListQueryHandler> logger)
         {
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            _vendingMachineRepository = vendingMachineRepository ?? throw new ArgumentNullException(nameof(vendingMachineRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -31,8 +31,8 @@ namespace Vending.Application.Features.Catalog.Queries.GetProductList
         {
             _logger.LogInformation("Start handler - GetProductListQueryHandler");
 
-            var productList = await _productRepository.GetAllProductsByVendingMachine(request.VendigMachineId);
-           return _mapper.Map<List<ProductDTO>>(productList);
+            var vendingMachine = await _vendingMachineRepository.GetVendingMachineWithProduct(request.SerialNumber);
+            return vendingMachine != null && vendingMachine.Products != null ? _mapper.Map<List<ProductDTO>>(vendingMachine.Products) : new List<ProductDTO>();
         }
     }
 }
