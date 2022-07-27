@@ -58,11 +58,10 @@ namespace Vending.Domain.Entities
         /// <summary>
         /// Decrease the stock of the product and create a domain event to calculate and return the price difference
         /// </summary>
-        /// <param name="availableBalance">Balance available for purchase</param>
-        public void SellProduct(decimal availableBalance)
+        public void SellProduct(string vendigMachineSerialNumber)
         {
             DecreasePortion();
-            AddDomainEvent(new ReturnDifferenceEvent() { AvailableBalance = availableBalance, ProductPrice = Price});
+            //PublishDomainEvent(new ReturnDifferenceEvent(Price, vendigMachineSerialNumber));
         }
 
         /// <summary>

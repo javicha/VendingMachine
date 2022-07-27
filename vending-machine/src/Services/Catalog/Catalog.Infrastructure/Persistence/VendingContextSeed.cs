@@ -26,6 +26,10 @@ namespace Vending.Infrastructure.Persistence
             {
                 vendingMachine.AddNewProduct(userCreated, product.Name, product.Price, product.Portions);
             }
+            foreach(var coin in GetCoins())
+            {
+                vendingMachine.AddNewCoin(userCreated, coin);
+            }
 
             return vendingMachine;
         }
@@ -39,6 +43,23 @@ namespace Vending.Infrastructure.Persistence
                 new Product("Juice", 1.80M, 20),
                 new Product("Chicken soup", 1.80M, 15)
             };
+        }
+
+        private static IEnumerable<Coin>  GetCoins()
+        {
+            //10 cent, 100 coins
+            //20 cent, 100 coins
+            //50 cent, 100 coins
+            //1 euro, 100 coins
+            List<Coin> coins = new List<Coin>();
+            for (int i = 0; i < 100; i++)
+            {
+                coins.Add(new Coin(0.10M));
+                coins.Add(new Coin(0.20M));
+                coins.Add(new Coin(0.50M));
+                coins.Add(new Coin(1M));
+            }
+            return coins;
         }
     }
 }

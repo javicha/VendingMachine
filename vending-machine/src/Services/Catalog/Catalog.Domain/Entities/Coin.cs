@@ -14,12 +14,17 @@ namespace Vending.Domain.Entities
         public decimal Amount { get; private set; }
 
         /// <summary>
+        /// For simplicity: True if the coin has been inserted by the customer, False otherwise
+        /// </summary>
+        public bool External { get; private set; }
+
+        /// <summary>
         /// Vending machine to which the coins belong
         /// </summary>
         public VendingMachine VendingMachine { get; private set; }
         public int VendingMachineId { get; set; }
 
-        public Coin(decimal amount)
+        public Coin(decimal amount, bool external = false)
         {
             //Ensuring integrity of data
             if (!ValidCoinAmounts.Contains(amount))
@@ -28,6 +33,7 @@ namespace Vending.Domain.Entities
             }
 
             Amount = amount;
+            External = external;
         }
 
         //For simplicity, we store the currency and allowed coin values in private variables

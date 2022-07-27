@@ -48,7 +48,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
             var availableBalance = vendingMachine.Coins.Sum(c => c.Amount);
             if(productToSell.Price <= availableBalance)
             {
-                productToSell.SellProduct(availableBalance);
+                productToSell.SellProduct(vendingMachine.SerialNumber);
                 await _productRepository.UpdateAsync(productToSell, "userTest");
                 return new Tuple<string, List<CoinDTO>>($"Thank you! Enjoy your {productToSell.Name}", new List<CoinDTO>());
             }

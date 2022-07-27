@@ -1,7 +1,6 @@
-﻿using Domain.Events;
-using MassTransit;
+﻿using Domain.Entities;
+using Domain.Events;
 using Microsoft.EntityFrameworkCore;
-using Vending.Domain.Common;
 using Vending.Domain.Entities;
 
 namespace Vending.Infrastructure.Persistence
@@ -11,11 +10,11 @@ namespace Vending.Infrastructure.Persistence
     /// </summary>
     public class VendingContext : DbContext
     {
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IDomainEventDispatcher _dispatcher;
 
-        public VendingContext(DbContextOptions<VendingContext> options, IPublishEndpoint publishEndpoint) : base(options)
+        public VendingContext(DbContextOptions<VendingContext> options, IDomainEventDispatcher dispatcher) : base(options)
         {
-            _publishEndpoint = publishEndpoint;
+            _dispatcher = dispatcher;
         }
 
         public DbSet<VendingMachine> VendingMachines { get; set; }
@@ -29,17 +28,23 @@ namespace Vending.Infrastructure.Persistence
             // For simplicity BEFORE committing data (EF SaveChanges) into the DB. This makes
             // a single transaction including side effects from the domain event
             // handlers that are using the same DbContext with Scope lifetime
-            List<IDomainEvent> preEvents;
-            do
-            {
-                var entities =  this.ChangeTracker.Entries<EntityBase>().ToList();
-                preEvents = entities.SelectMany(x => x.Entity.GetUncommittedEvents()).ToList();
-                entities.ForEach(entity => entity.Entity.MarkEventsAsCommitted());
-                var tasksPre = preEvents.Select(async r => await _publishEndpoint.Publish(r)).ToList();
-                await Task.WhenAll(tasksPre);
-            } while (preEvents.Count != 0);
-
+            await DispatchDomainEvents();
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private async Task DispatchDomainEvents()
+        {
+            var domainEventEntities = ChangeTracker.Entries<IEntity>()
+                .Select(po => po.Entity)
+                .Where(po => po.DomainEvents.Any())
+                .ToArray();
+
+            foreach (var entity in domainEventEntities)
+            {
+                IDomainEvent dev;
+                while (entity.DomainEvents.TryTake(out dev))
+                    await _dispatcher.Dispatch(dev);
+            }
         }
 
         #endregion

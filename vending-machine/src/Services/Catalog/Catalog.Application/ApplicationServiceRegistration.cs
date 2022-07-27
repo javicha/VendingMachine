@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using Application.EventDispatcher;
+using Domain.Events;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -18,6 +20,8 @@ namespace Vending.Application
         /// <returns></returns>
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddTransient<IDomainEventDispatcher, MediatrDomainEventDispatcher>();
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
