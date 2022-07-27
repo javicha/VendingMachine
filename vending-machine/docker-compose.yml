@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  vending.api:
+    image: ${DOCKER_REGISTRY-}vendingapi
+    build:
+      context: .
+      dockerfile: src/Services/Catalog/Catalog.API/Dockerfile
+
+  rabbitmq:
+    image: rabbitmq:management-alpine

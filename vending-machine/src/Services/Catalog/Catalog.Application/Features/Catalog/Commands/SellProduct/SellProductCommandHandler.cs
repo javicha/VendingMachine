@@ -14,12 +14,15 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
     public class SellProductCommandHandler : IRequestHandler<SellProductCommand, Tuple<string, List<CoinDTO>>>
     {
         private readonly IVendingMachineRepository _vendingMachineRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<SellProductCommandHandler> _logger;
 
-        public SellProductCommandHandler(IVendingMachineRepository vendingMachineRepository, IMapper mapper, ILogger<SellProductCommandHandler> logger)
+        public SellProductCommandHandler(IVendingMachineRepository vendingMachineRepository, IProductRepository productRepository, 
+            IMapper mapper, ILogger<SellProductCommandHandler> logger)
         {
             _vendingMachineRepository = vendingMachineRepository ?? throw new ArgumentNullException(nameof(vendingMachineRepository));
+            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -42,10 +45,11 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
             }
 
             //Check price and coins
-            var availablBalance = vendingMachine.Coins.Sum(c => c.Amount);
-            if(productToSell.Price <= availablBalance)
+            var availableBalance = vendingMachine.Coins.Sum(c => c.Amount);
+            if(productToSell.Price <= availableBalance)
             {
-                //TODO buy
+                productToSell.SellProduct(availableBalance);
+                await _productRepository.UpdateAsync(productToSell, "userTest");
                 return new Tuple<string, List<CoinDTO>>($"Thank you! Enjoy your {productToSell.Name}", new List<CoinDTO>());
             }
             else

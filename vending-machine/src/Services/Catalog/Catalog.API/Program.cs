@@ -7,6 +7,8 @@ using Vending.Infrastructure;
 using Vending.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+//WebApplicationBuilder returned by WebApplication.CreateBuilder(args) exposes Configuration and Environment properties
+ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -36,7 +38,7 @@ builder.Services.AddSwaggerGen(c =>
 
 //Register all the Application and Infrastructure layers services
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(configuration);
 
 var app = builder.Build();
 

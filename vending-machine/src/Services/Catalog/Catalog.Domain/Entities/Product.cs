@@ -1,4 +1,5 @@
 ﻿using Vending.Domain.Common;
+using Vending.Domain.Events;
 
 namespace Vending.Domain.Entities
 {
@@ -52,12 +53,22 @@ namespace Vending.Domain.Entities
 
 
 
-        #region PublicMethods
+        #region Methods
+
+        /// <summary>
+        /// Decrease the stock of the product and create a domain event to calculate and return the price difference
+        /// </summary>
+        /// <param name="availableBalance">Balance available for purchase</param>
+        public void SellProduct(decimal availableBalance)
+        {
+            DecreasePortion();
+            AddDomainEvent(new ReturnDifferenceEvent() { AvailableBalance = availableBalance, ProductPrice = Price});
+        }
 
         /// <summary>
         /// Decrements the number of portions of the product by one unit. The minimum number of units will be zero.
         /// </summary>
-        public void DecreasePortion()
+        private void DecreasePortion()
         {
             if (Portions > 0) 
             { 
@@ -65,8 +76,8 @@ namespace Vending.Domain.Entities
 
                 //Check minimal stock
                 if(Portions == MinStock) 
-                { 
-                    //TODO create domain event
+                {
+                    //We could create an event to notify that it is necessary to replenish the stock
                 }
             }
         }
