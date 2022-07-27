@@ -1,25 +1,26 @@
-﻿using Domain.Events;
+﻿using Domain.DTO;
+using Domain.Events;
 
 namespace Vending.Domain.Events
 {
     /// <summary>
     /// Domain event
     /// </summary>
-    public class IncreaseWalletEvent : IDomainEvent
+    public class RemoveWalletCoinsEvent : IDomainEvent
     {
         /// <summary>
-        /// Amount by which the wallet is increased
+        /// Coins to remove in order to update the wallet
         /// </summary>
-        public decimal Amount { get; set; }
+        public List<CoinDTO> Coins { get; set; }
 
         /// <summary>
         /// Vending machine serial number
         /// </summary>
         public string SerialNumber { get; set; }
 
-        public IncreaseWalletEvent(decimal amount, string serialNumber)
+        public RemoveWalletCoinsEvent(List<CoinDTO> coins, string serialNumber)
         {
-            Amount = amount;
+            Coins = coins ?? throw new ArgumentNullException(nameof(coins));
             SerialNumber = serialNumber ?? throw new ArgumentNullException(nameof(serialNumber));
         }
     }

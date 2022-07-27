@@ -8,6 +8,9 @@ using Vending.Domain.Events;
 
 namespace Vending.Application.Features.Wallet.DomainEvents
 {
+    /// <summary>
+    /// CQRS pattern: GetBackCoinsEvent domain event handler
+    /// </summary>
     public class GetBackCoinsEventHandler : INotificationHandler<DomainEventNotification<GetBackCoinsEvent>>
     {
         private readonly IVendingMachineRepository _vendingMachineRepository;
@@ -19,6 +22,13 @@ namespace Vending.Application.Features.Wallet.DomainEvents
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <summary>
+        /// Removes the coins inserted by client
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException"></exception>
         public async Task Handle(DomainEventNotification<GetBackCoinsEvent> notification, CancellationToken cancellationToken)
         {
             var domainEvent = notification.DomainEvent;

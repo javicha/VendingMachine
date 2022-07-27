@@ -45,17 +45,29 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
             }
 
             //Check price and coins
-            var availableBalance = vendingMachine.Coins.Sum(c => c.Amount);
+            var availableBalance = vendingMachine.Coins.Where(c => c.External).Sum(c => c.Amount);
             if(productToSell.Price <= availableBalance)
             {
-                productToSell.SellProduct(vendingMachine.SerialNumber);
+                var coinsToReturn = CalculateDifference(availableBalance, productToSell.Price);
+                productToSell.SellProduct(coinsToReturn, vendingMachine.SerialNumber);
+
                 await _productRepository.UpdateAsync(productToSell, "userTest");
-                return new Tuple<string, List<CoinDTO>>($"Thank you! Enjoy your {productToSell.Name}", new List<CoinDTO>());
+                return new Tuple<string, List<CoinDTO>>($"Thank you! Enjoy your {productToSell.Name}", coinsToReturn);
             }
             else
             {
                 return new Tuple<string, List<CoinDTO>>("Insufficient amount", new List<CoinDTO>());
             }
+        }
+
+        /// <summary>
+        /// Return the difference between the inserted amount and the price using the smallest number of coins possible.
+        /// </summary>
+        /// <returns></returns>
+        private List<CoinDTO> CalculateDifference(decimal availableBalance, decimal productPrice)
+        {
+            //TODO
+            return new List<CoinDTO>() { new CoinDTO() { Amount = 1M }, new CoinDTO() { Amount = 0.20M } };
         }
     }
 }

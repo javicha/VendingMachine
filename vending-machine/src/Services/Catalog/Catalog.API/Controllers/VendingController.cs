@@ -6,6 +6,7 @@ using Vending.Application.Features.Catalog.Commands.AcceptCoin;
 using Vending.Application.Features.Catalog.Commands.ReturnCoins;
 using Vending.Application.Features.Catalog.Commands.SellProduct;
 using Vending.Application.Features.Catalog.Queries.GetProductList;
+using Vending.Application.Features.Wallet.Queries.GetWalletAmount;
 
 namespace Vending.API.Controllers
 {
@@ -38,6 +39,24 @@ namespace Vending.API.Controllers
 
             var products = await _mediator.Send(query); //Mediator is responsible for sending each query/command to its corresponding handler
             return Ok(products);
+        }
+
+
+        /// <summary>
+        /// Gets the total monetary value stored in the vending machine
+        /// </summary>
+        /// <param name="query">Query parameters</param>
+        /// <returns>The total monetary value</returns>
+        [HttpGet]
+        [Route("GetTotalAmount")]
+        [ProducesResponseType(typeof(decimal), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<decimal>> GetTotalAmount([FromQuery] GetWalletAmountQuery query)
+        {
+            _logger.LogInformation($"VendingController - GetCatalog - {JsonSerializer.Serialize(query)}");
+
+            var totalAmount = await _mediator.Send(query); //Mediator is responsible for sending each query/command to its corresponding handler
+            return Ok(totalAmount.ToString("0.00"));
         }
 
 

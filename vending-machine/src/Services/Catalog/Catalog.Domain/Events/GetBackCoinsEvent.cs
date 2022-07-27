@@ -2,6 +2,9 @@
 
 namespace Vending.Domain.Events
 {
+    /// <summary>
+    /// Domain event
+    /// </summary>
     public class GetBackCoinsEvent : IDomainEvent
     {
         /// <summary>

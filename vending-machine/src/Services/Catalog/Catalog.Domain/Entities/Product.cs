@@ -1,4 +1,5 @@
-﻿using Vending.Domain.Common;
+﻿using Domain.DTO;
+using Vending.Domain.Common;
 using Vending.Domain.Events;
 
 namespace Vending.Domain.Entities
@@ -56,12 +57,12 @@ namespace Vending.Domain.Entities
         #region Methods
 
         /// <summary>
-        /// Decrease the stock of the product and create a domain event to calculate and return the price difference
+        /// Decrease the stock of the product and publish an event to update the wallet amount
         /// </summary>
-        public void SellProduct(string vendigMachineSerialNumber)
+        public void SellProduct(List<CoinDTO> coinsToReturn, string serialNumber)
         {
             DecreasePortion();
-            //PublishDomainEvent(new ReturnDifferenceEvent(Price, vendigMachineSerialNumber));
+            PublishDomainEvent(new RemoveWalletCoinsEvent(coinsToReturn, serialNumber));
         }
 
         /// <summary>

@@ -8,7 +8,7 @@
         /// <summary>
         /// Monetary quantity
         /// </summary>
-        public decimal Amount { get; private set; }
+        public decimal Amount { get; set; }
 
         public string GetName()
         {
