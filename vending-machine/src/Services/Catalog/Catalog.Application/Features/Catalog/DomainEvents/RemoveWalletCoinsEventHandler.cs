@@ -47,6 +47,8 @@ namespace Vending.Application.Features.Catalog.DomainEvents
                 var coinToDelete = vendingMachine.Coins.Where(x => x.DateDeleted == null && x.Amount.Equals(c.Amount)).First();
                 coinToDelete.SetDeleteAuditParams("userTest");
             }
+            //Mark the rest of the coin as internal to reset the client coin basket
+            vendingMachine.Coins.Where(c => c.DateDeleted != null && c.External).ToList().ForEach(c => { c.SetAsInternal(); });
         }
     }
 }

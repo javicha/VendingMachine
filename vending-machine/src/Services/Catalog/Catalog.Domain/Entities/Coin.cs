@@ -36,6 +36,11 @@ namespace Vending.Domain.Entities
             External = external;
         }
 
+        public void SetAsInternal()
+        {
+            External = false;
+        }
+
         //For simplicity, we store the currency and allowed coin values in private variables
         private readonly List<decimal> ValidCoinAmounts = new List<decimal>() { 0.10m, 0.20m, 0.50m, 1m, 2m };
     }
