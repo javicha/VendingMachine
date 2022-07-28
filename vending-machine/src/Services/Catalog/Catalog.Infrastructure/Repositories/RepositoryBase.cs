@@ -90,11 +90,12 @@ namespace Vending.Infrastructure.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task UpdateAsync(T entity, string userName)
+        public async Task<T> UpdateAsync(T entity, string userName)
         {
             entity.SetUpdateAuditParams(userName);
             _vendingContext.Entry(entity).State = EntityState.Modified;
             await _vendingContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

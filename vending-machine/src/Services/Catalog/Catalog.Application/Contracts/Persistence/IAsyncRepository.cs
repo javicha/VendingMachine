@@ -39,7 +39,7 @@ namespace Vending.Application.Contracts.Persistence
 		/// Update the data of an entity in the database
 		/// </summary>
 		/// <param name="entity">Entity to update in database</param>
-		Task UpdateAsync(T entity, string userName);
+		Task<T> UpdateAsync(T entity, string userName);
 
 		/// <summary>
 		/// Delete an entity in the database
