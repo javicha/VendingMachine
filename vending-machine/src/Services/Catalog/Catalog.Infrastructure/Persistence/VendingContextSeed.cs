@@ -24,7 +24,7 @@ namespace Vending.Infrastructure.Persistence
             var vendingMachine = new VendingMachine("1234", "Delicious Drinks", userCreated);
             foreach(var product in GetProducts())
             {
-                vendingMachine.AddNewProduct(userCreated, product.Name, product.Price, product.Portions);
+                vendingMachine.AddNewProduct(userCreated, product.Name, product.Price, product.Portions, product.MinStock);
             }
             foreach(var coin in GetCoins())
             {
@@ -38,7 +38,7 @@ namespace Vending.Infrastructure.Persistence
         {
             return new List<Product>
             {
-                new Product("Tea", 1.30M, 10),
+                new Product("Tea", 1.30M, 10, 9),
                 new Product("Espresso", 1.80M, 20),
                 new Product("Juice", 1.80M, 20),
                 new Product("Chicken soup", 1.80M, 15)
