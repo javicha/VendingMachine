@@ -11,7 +11,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
     /// <summary>
     /// CQRS pattern: SellProductCommand command handler
     /// </summary>
-    public class SellProductCommandHandler : IRequestHandler<SellProductCommand, Tuple<string, List<CoinDTO>>>
+    public class SellProductCommandHandler : IRequestHandler<SellProductCommand, SellProductResponseDTO>
     {
         private readonly IVendingMachineRepository _vendingMachineRepository;
         private readonly IProductRepository _productRepository;
@@ -28,7 +28,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
         }
 
 
-        public async Task<Tuple<string, List<CoinDTO>>> Handle(SellProductCommand request, CancellationToken cancellationToken)
+        public async Task<SellProductResponseDTO> Handle(SellProductCommand request, CancellationToken cancellationToken)
         {
             //Get vending machine in order to check product and price
             var vendingMachine = await _vendingMachineRepository.GetVendingMachineWithProductsAndCoins(request.SerialNumber);
@@ -45,18 +45,19 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
             }
 
             //Check price and coins
+            var coinsToReturn = new List<CoinDTO>();
             var availableBalance = vendingMachine.Coins.Where(c => c.External).Sum(c => c.Amount);
             if(productToSell.Price <= availableBalance)
             {
-                var coinsToReturn = CalculateDifference(availableBalance, productToSell.Price);
-                productToSell.SellProduct(coinsToReturn, vendingMachine.SerialNumber);
+                coinsToReturn = CalculateDifference(availableBalance, productToSell.Price);
+                bool minStock = productToSell.SellProduct(coinsToReturn, vendingMachine.SerialNumber);
 
                 await _productRepository.UpdateAsync(productToSell, "userTest");
-                return new Tuple<string, List<CoinDTO>>($"Thank you! Enjoy your {productToSell.Name}", coinsToReturn);
+                return new SellProductResponseDTO($"Thank you! Enjoy your {productToSell.Name}", coinsToReturn, minStock);
             }
             else
             {
-                return new Tuple<string, List<CoinDTO>>("Insufficient amount", new List<CoinDTO>());
+                return new SellProductResponseDTO("Insufficient amount", coinsToReturn, false);
             }
         }
 

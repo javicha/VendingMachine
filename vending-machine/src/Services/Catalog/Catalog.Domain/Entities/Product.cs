@@ -59,27 +59,26 @@ namespace Vending.Domain.Entities
         /// <summary>
         /// Decrease the stock of the product and publish an event to update the wallet amount
         /// </summary>
-        public void SellProduct(List<CoinDTO> coinsToReturn, string serialNumber)
+        public bool SellProduct(List<CoinDTO> coinsToReturn, string serialNumber)
         {
-            DecreasePortion();
+            bool minStock = DecreasePortion();
             PublishDomainEvent(new RemoveWalletCoinsEvent(coinsToReturn, serialNumber));
+            return minStock;
         }
 
         /// <summary>
         /// Decrements the number of portions of the product by one unit. The minimum number of units will be zero.
         /// </summary>
-        private void DecreasePortion()
+        private bool DecreasePortion()
         {
             if (Portions > 0) 
             { 
                 Portions -= 1;
 
-                //Check minimal stock
-                if(Portions == MinStock) 
-                {
-                    //We could create an event to notify that it is necessary to replenish the stock
-                }
+                //Check minimal stock. We create an event to notify that it is necessary to replenish the stock
+                return Portions <= MinStock; 
             }
+            return false;
         }
 
         #endregion

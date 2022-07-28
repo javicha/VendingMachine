@@ -9,3 +9,10 @@ services:
 
   rabbitmq:
     image: rabbitmq:management-alpine
+
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: src/Services/Ordering/Ordering.API/Dockerfile
+

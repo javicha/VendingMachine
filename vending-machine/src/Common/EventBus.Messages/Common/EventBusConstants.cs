@@ -5,7 +5,6 @@
     /// </summary>
     public static class EventBusConstants
     {
-        public static readonly string CalculateDifferenceQueue = "CalculateDifference.Queue";
-        public static readonly string UpdateCoinStockQueue = "UpdateCoinStock.Queue";
+        public static readonly string ReplenishStockQueue = "ReplenishStock.Queue";
     }
 }

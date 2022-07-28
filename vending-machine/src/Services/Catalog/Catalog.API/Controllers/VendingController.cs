@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using EventBus.Messages.Events;
+using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
@@ -15,11 +17,13 @@ namespace Vending.API.Controllers
     public class VendingController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<VendingController> _logger;
 
-        public VendingController(IMediator mediator, ILogger<VendingController> logger)
+        public VendingController(IMediator mediator, IPublishEndpoint publishEndpoint, ILogger<VendingController> logger)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -108,14 +112,22 @@ namespace Vending.API.Controllers
         /// </returns>
         [HttpPost]
         [Route("SellProduct")]
-        [ProducesResponseType(typeof(Tuple<string, List<string>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SellProductResponseDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<int>> SellProduct([FromBody] SellProductCommand command)
+        public async Task<ActionResult<SellProductResponseDTO>> SellProduct([FromBody] SellProductCommand command)
         {
             _logger.LogInformation($"VendingController - SellProduct - {JsonSerializer.Serialize(command)}");
 
             var result = await _mediator.Send(command);
+
+            //Notification between microservices to replenish the stock
+            if (result.MinStockReached)
+            {
+                var eventMessage = new ReplenishStockEvent(command.ProductId);
+                await _publishEndpoint.Publish(eventMessage);
+            }
+
             return Ok(result);
         }
     }

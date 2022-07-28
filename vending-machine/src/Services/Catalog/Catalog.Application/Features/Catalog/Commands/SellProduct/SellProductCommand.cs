@@ -1,5 +1,4 @@
-﻿using Domain.DTO;
-using MediatR;
+﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace Vending.Application.Features.Catalog.Commands.SellProduct
@@ -7,7 +6,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
     /// <summary>
     /// CQRS pattern: Parameters of the command to sell a product
     /// </summary>
-    public class SellProductCommand : IRequest<Tuple<string, List<CoinDTO>>>
+    public class SellProductCommand : IRequest<SellProductResponseDTO>
     {
         /// <summary>
         /// Vending machine unique serial number

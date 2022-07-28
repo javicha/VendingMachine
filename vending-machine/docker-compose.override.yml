@@ -4,8 +4,11 @@ services:
   vending.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     ports:
-      - "80"
+      - "7000:80"
+    depends_on:
+      - rabbitmq
 
   rabbitmq:
     container_name: rabbitmq
@@ -13,3 +16,13 @@ services:
     ports:
       - "5672:5672"
       - "7004:15672"
+
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    ports:
+      - "7001:80"
+    depends_on:
+      - rabbitmq
+
