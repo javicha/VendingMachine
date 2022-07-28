@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\src\Services\Catalog\Catalog.Infrastructure\Vending.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+  </ItemGroup>
+
 </Project>
