@@ -69,7 +69,7 @@ namespace Vending.Domain.Entities
         /// <summary>
         /// Decrements the number of portions of the product by one unit. The minimum number of units will be zero.
         /// </summary>
-        private bool DecreasePortion()
+        public bool DecreasePortion()
         {
             if (Portions > 0) 
             { 
