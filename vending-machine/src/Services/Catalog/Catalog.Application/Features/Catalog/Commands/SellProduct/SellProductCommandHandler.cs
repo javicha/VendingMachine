@@ -18,7 +18,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
         private readonly IMapper _mapper;
         private readonly ILogger<SellProductCommandHandler> _logger;
 
-        public SellProductCommandHandler(IVendingMachineRepository vendingMachineRepository, IProductRepository productRepository, 
+        public SellProductCommandHandler(IVendingMachineRepository vendingMachineRepository, IProductRepository productRepository,
             IMapper mapper, ILogger<SellProductCommandHandler> logger)
         {
             _vendingMachineRepository = vendingMachineRepository ?? throw new ArgumentNullException(nameof(vendingMachineRepository));
@@ -47,7 +47,7 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
             //Check price and coins
             var coinsToReturn = new List<CoinDTO>();
             var availableBalance = vendingMachine.Coins.Where(c => c.External).Sum(c => c.Amount);
-            if(productToSell.Price <= availableBalance)
+            if (productToSell.Price <= availableBalance)
             {
                 coinsToReturn = CalculateDifference(availableBalance, productToSell.Price, vendingMachine.Coins.ToArray());
                 bool minStock = productToSell.SellProduct(coinsToReturn, vendingMachine.SerialNumber);
@@ -68,55 +68,32 @@ namespace Vending.Application.Features.Catalog.Commands.SellProduct
         private List<CoinDTO> CalculateDifference(decimal availableBalance, decimal productPrice, Coin[] totalCoins)
         {
             decimal difference = availableBalance - productPrice;
-
-            List<decimal> amounts = new List<decimal>();
-            //sum_up_recursive(totalCoins.Select(c => c.Amount).ToList(), difference, amounts);
-            //int numCoins = minCoins(totalCoins, totalCoins.Length, difference);
-
-            //TODO
-            return new List<CoinDTO>() { new CoinDTO() { Amount = 1M }, new CoinDTO() { Amount = 0.20M } };
+            return findMinCoins(totalCoins.Select(c => c.Amount).ToArray(), totalCoins.Count(), difference);
         }
 
-
-        private void sum_up_recursive(List<decimal> numbers, decimal target, List<decimal> partial, bool found = false)
+        private List<CoinDTO> findMinCoins(decimal[] totalCoins, int size, decimal value)
         {
-            bool combinationFound = found;
+            List<CoinDTO> coinsToReturn = new List<CoinDTO>();
+            int i, count = 0;
             //We perform the calculations with the bigger amounts first to use the minimum number of coins
-            numbers = numbers.OrderByDescending(n => n).ToList();
-            decimal s = 0;
-            
-            foreach (decimal x in partial) s += x;
+            totalCoins = totalCoins.OrderByDescending(n => n).ToArray();
 
-            //We reach the target using the minium coins
-            if (s == target)
+            for (i = 0; i < size; i++)
             {
-                Console.WriteLine("sum(" + string.Join(",", partial.ToArray()) + ")=" + target);
-                combinationFound = true;
-                return;
-            }
-            else
-            {
-                if (s >= target)
-                    return;
-
-                for (int i = 0; i < numbers.Count; i++)
+                //take as much from coins[i]
+                while (value >= totalCoins[i])
                 {
-                    if(!combinationFound)
-                    {
-                        List<decimal> remaining = new List<decimal>();
-                        decimal n = numbers[i];
-                        for (int j = i + 1; j < numbers.Count; j++) remaining.Add(numbers[j]);
-
-                        List<decimal> partial_rec = new List<decimal>(partial);
-                        partial_rec.Add(n);
-
-                        sum_up_recursive(remaining, target, partial_rec, combinationFound);
-                    }
+                    //after taking the coin, reduce the value.
+                    value -= totalCoins[i];
+                    coinsToReturn.Add(new CoinDTO(totalCoins[i]));
+                    count++;
                 }
+                if (value == 0)
+                    break;
+
             }
+
+            return coinsToReturn;
         }
-
-
-
-}
+    }
 }

@@ -26,7 +26,7 @@ namespace Vending.Application.Features.Catalog.DomainEvents
 
 
         /// <summary>
-        /// Return the difference between the inserted amount and the price using the smallest number of coins possible.
+        /// Removes the coins returned to the client from the vending machine wallet and reset the client coins basket
         /// </summary>
         /// <param name="notification"></param>
         /// <param name="cancellationToken"></param>
@@ -48,7 +48,8 @@ namespace Vending.Application.Features.Catalog.DomainEvents
                 coinToDelete.SetDeleteAuditParams("userTest");
             }
             //Mark the rest of the coin as internal to reset the client coin basket
-            vendingMachine.Coins.Where(c => c.DateDeleted != null && c.External).ToList().ForEach(c => { c.SetAsInternal(); });
+            var externalCoins = vendingMachine.Coins.Where(x => x.DateDeleted == null && x.External).ToList();
+            externalCoins.ForEach(c => { c.SetAsInternal(); });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.Exceptions;
 using Vending.Domain.Common;
+using Vending.Domain.ExtensionMethods;
 
 namespace Vending.Domain.Entities
 {
@@ -39,6 +40,7 @@ namespace Vending.Domain.Entities
         public void SetAsInternal()
         {
             External = false;
+            this.SetUpdateAuditParams("userTest");
         }
 
         //For simplicity, we store the currency and allowed coin values in private variables

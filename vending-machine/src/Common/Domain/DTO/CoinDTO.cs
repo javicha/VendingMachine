@@ -10,6 +10,11 @@
         /// </summary>
         public decimal Amount { get; set; }
 
+        public CoinDTO(decimal amount)
+        {
+            Amount = amount;
+        }
+
         public string GetName()
         {
             switch (Amount)
