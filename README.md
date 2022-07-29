@@ -57,7 +57,8 @@ Regarding the folder structure, we have a root folder with the code (src) and an
 ##  Vending.API architecture
 The service is designed following the principles of Clean Architecture DDD. Then, we structure the code into 4 layers:
 
-![clean_architecture](https://user-images.githubusercontent.com/3404380/174666084-23ac18ef-88a5-49e5-abc1-eb64da12fedd.png)
+![174666084-23ac18ef-88a5-49e5-abc1-eb64da12fedd](https://user-images.githubusercontent.com/3404380/181740284-f983933b-2809-48bd-b5d7-94764682a8a7.png)
+
 
 **Vending.Domain** layer and **Vending.Application** layer will be the core layers. And we have **Vending.API** layer, which is the presentation layer, and **Vending.Infrastructure** layer (we also call Periphery layers). The main idea behind Clean Architecture approach is to separate the domain code from the application and infrastructure code, so that the core (business logic) of our software can evolve independently of the rest of the components. Regarding the DDD (Domain Drive Design) approach, it proposes modeling based on business reality according to its use cases. It is essential to organize the code to align with the business problems and use the same business terms (ubiquitous language).
 
