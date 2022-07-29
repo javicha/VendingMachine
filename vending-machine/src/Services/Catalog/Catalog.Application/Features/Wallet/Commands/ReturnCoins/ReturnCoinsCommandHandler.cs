@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Vending.Application.Contracts.Persistence;
 using Vending.Domain.Entities;
 
-namespace Vending.Application.Features.Catalog.Commands.ReturnCoins
+namespace Vending.Application.Features.Wallet.Commands.ReturnCoins
 {
     /// <summary>
     /// CQRS pattern: ReturnCoinsCommand command handler

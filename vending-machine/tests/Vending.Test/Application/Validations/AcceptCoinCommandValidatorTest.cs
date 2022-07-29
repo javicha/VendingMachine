@@ -1,5 +1,5 @@
 ﻿using Moq.AutoMock;
-using Vending.Application.Features.Catalog.Commands.AcceptCoin;
+using Vending.Application.Features.Wallet.Commands.AcceptCoin;
 
 namespace Vending.Test.Application.Validations
 {

@@ -7,7 +7,7 @@ using Vending.Domain.Entities;
 using Vending.Domain.Events;
 using Vending.Domain.ExtensionMethods;
 
-namespace Vending.Application.Features.Catalog.DomainEvents
+namespace Vending.Application.Features.Wallet.DomainEvents
 {
     /// <summary>
     /// CQRS pattern: RemoveWalletCoinsEvent domain event handler
@@ -42,7 +42,7 @@ namespace Vending.Application.Features.Catalog.DomainEvents
             }
 
             //Removing coins
-            foreach(var c in domainEvent.Coins)
+            foreach (var c in domainEvent.Coins)
             {
                 var coinToDelete = vendingMachine.Coins.Where(x => x.DateDeleted == null && x.Amount.Equals(c.Amount)).First();
                 coinToDelete.SetDeleteAuditParams("userTest");

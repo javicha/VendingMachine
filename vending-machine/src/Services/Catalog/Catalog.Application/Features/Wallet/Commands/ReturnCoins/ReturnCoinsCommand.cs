@@ -2,7 +2,7 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vending.Application.Features.Catalog.Commands.ReturnCoins
+namespace Vending.Application.Features.Wallet.Commands.ReturnCoins
 {
     /// <summary>
     /// CQRS pattern: Parameters of the command that returns the coins inserted in the machine

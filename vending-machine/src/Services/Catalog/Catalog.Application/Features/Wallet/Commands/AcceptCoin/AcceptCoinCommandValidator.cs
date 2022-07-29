@@ -3,7 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Vending.Domain.Entities;
 
-namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
+namespace Vending.Application.Features.Wallet.Commands.AcceptCoin
 {
     /// <summary>
     /// CQRS pattern: Pre processor behavior. Validator for AcceptCoinCommand (we use fluent validation).

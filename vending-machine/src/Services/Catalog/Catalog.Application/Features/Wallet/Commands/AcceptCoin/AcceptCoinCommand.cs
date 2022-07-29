@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
+namespace Vending.Application.Features.Wallet.Commands.AcceptCoin
 {
     /// <summary>
     /// CQRS pattern: Parameters of the command to accept a coin in a vending machine. Expected result: total amount inserted

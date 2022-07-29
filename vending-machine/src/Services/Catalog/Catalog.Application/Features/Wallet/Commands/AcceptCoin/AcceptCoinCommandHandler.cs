@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Vending.Application.Contracts.Persistence;
 using Vending.Domain.Entities;
 
-namespace Vending.Application.Features.Catalog.Commands.AcceptCoin
+namespace Vending.Application.Features.Wallet.Commands.AcceptCoin
 {
     /// <summary>
     /// CQRS pattern: AcceptCoinCommand command handler

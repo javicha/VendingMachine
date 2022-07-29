@@ -3,7 +3,7 @@ using Moq;
 using Moq.AutoMock;
 using System.Collections.Concurrent;
 using Vending.Application.Contracts.Persistence;
-using Vending.Application.Features.Catalog.Commands.AcceptCoin;
+using Vending.Application.Features.Wallet.Commands.AcceptCoin;
 using Vending.Application.Mappings;
 using Vending.Domain.Entities;
 
