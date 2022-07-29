@@ -54,7 +54,59 @@ Regarding the folder structure, we have a root folder with the code (src) and an
 
 
 
+##  Vending.API architecture
+The service is designed following the principles of Clean Architecture DDD. Then, we structure the code into 4 layers:
+
+![clean_architecture](https://user-images.githubusercontent.com/3404380/174666084-23ac18ef-88a5-49e5-abc1-eb64da12fedd.png)
+
+**Vending.Domain** layer and **Vending.Application** layer will be the core layers. And we have **Vending.API** layer, which is the presentation layer, and **Vending.Infrastructure** layer (we also call Periphery layers). The main idea behind Clean Architecture approach is to separate the domain code from the application and infrastructure code, so that the core (business logic) of our software can evolve independently of the rest of the components. Regarding the DDD (Domain Drive Design) approach, it proposes modeling based on business reality according to its use cases. It is essential to organize the code to align with the business problems and use the same business terms (ubiquitous language).
+
+We explain the layers in more detail:
+
++  **Vending.Domain**: It must contain the domain entities and encapsulate their business logic. And should **not have dependencies** on other application layers.
++  **Vending.Application**: This layer covers all business use cases, therefore it is responsible for aspects such as business use cases, business validations, business flows, etc. **Work only with abstractions**, delegating implementations to the infrastructure layer. Depends on Domain layer in order to use business entities and logic. We structure this layer into 3 main folders:
+    -  Contracts: represent business requirements. It includes the interfaces and contracts for the application. This folder should cover application capabilities. This should include interfaces for abstracting use case implementations. We separate contracts into subfolders based on functionality.
+    -  Features: represents the business use cases. It includes the application use cases and features, and the domain events. This folder will apply the CQRS design pattern for handling business use cases. It will contain a subfolder for each use case. Is the heart of this layer
+    -  Behaviours: represents the business validations. It includes the business validations, logging, and other crosscutting concerns that apply when performing the use case implementations. 
++  **Vending.Infrastructure**: This layer will include the implementations of the abstractions defined in the Application layer. These are database operations, email sends operations, and all those related to external systems. It depends on the Application layer to use core layers.
++  **Vending.API**: This layer exposes API to external actors. Depends on the Application layer (to perform operations in controllers) and the Infrastructure layer.
+
+
+##  Vending.API endpoints
+These are the endpoints to interact with the vending machine:
+
+![image](https://user-images.githubusercontent.com/3404380/181738761-b7f20095-deb8-46b1-b745-43f17926fa10.png)
+
+**VERY IMPORTANT: You must use a SerialNumber parameter to interact with the vending machine. The serial number is "1234".** 
 
 
 
+##  Design patterns and best practices
++  CQRS
++  Dependency Inversion
++  Dependency Injection
++  Logging
++  Validation
++  Exception handling
++  Repository
++  Unit of work
++  Testing
++  Implement with SOLID principles in mind
 
+
+##  Third-party Nuget packages
++  **AutoMapper**: A convention-based object-object mapper. We use it to mapping operations between objects.
++  **AutoMapper.Extensions.Microsoft.DependencyInjection**: AutoMapper extensions for ASP.NET Core necessary to register AutoMapper in .NET Core dependency injection tool.
++  **FluentValidation**: A validation library for .NET that uses a fluent interface to construct strongly-typed validation rules. We ise it to perform validations when applying CQRS, before execute commands.
++  **FluentValidation.DependencyInjectionExtensions**: Dependency injection extensions for FluentValidation. We use it to being able to register FluentValidation in the NET Core dependency injection tool
++  **MassTransit**: MassTransit is a message-based distributed application framework for .NET. We use it in order to create queues in RabbitMQ, and thus, support asynchronous communication between microservices.
++  **MassTransit.RabbitMQ**: MassTransit RabbitMQ transport support. We use in order to connect to Rabbit MQ message broker.
++  **MediatR.Extensions.Microsoft.DependencyInjection**: MediatR extensions for ASP.NET Core. We use it in order to implement CQRS with Mediator pattern
++  **Moq.AutoMock**: An auto-mocking container that generates mocks using Moq
++  **Swashbuckle.AspNetCore**: Swagger tools for documenting APIs built on ASP.NET Core
++  **xunit**: xUnit.net is a developer testing framework, built to support Test Driven Development, with a design goal of extreme simplicity and alignment with framework features.
+
+
+##  Assumptions
++  We use an in-memory database for simplicity
++  We only implement unit tests for the use case of adding product to inventory, to illustrate examples in the 3 layers of Clean Architecture
